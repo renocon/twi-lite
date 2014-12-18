@@ -30,12 +30,9 @@
 	}	
 
 	function streamOff(){
-		//if(!connected) return;
+		
 		$('#tweetResetButton').show(200);
-		//connected = false;
-		//socket.disconnect();
-		//clearInterval(processTweet);
-		//console.log('disconnected');
+
 	}
 
 	function processTweet(){
@@ -55,12 +52,12 @@
 							tweet.text = tweet.text.replace('#'+tweet.metah[x].text,link);
 						}
 
-						//https://twitter.com/hashtag/Repost?src=hash
+						
 						$('#tweetArray').append('<tr style=”background: url('+tweet.banurl+
 							') no-repeat 0 0;”><td><a href="https://twitter.com/'+tweet.scrnm+'"><img src="'
 							+tweet.imgurl+'" height="70" ></a></td><td><a href="https://twitter.com/'
 							+tweet.scrnm+'">'+tweet.scrnm+'</a><br>'+tweet.text+'</td></tr>');
-						//printed++;
+						
 						onscreen++;
 						return;
 					}
@@ -79,12 +76,12 @@
 		var request = $.ajax({
                 type: 'GET',
                 url: "/sessionData",
-                //dataType: 'json',
+                
                 success: function(data) {
                     session = data;
                     console.log(session);
                     if(data.name)$('#usrTitle').text('Hey '+session.name+'!');
-                    //setInterval(processTweet,500);
+                    
                     
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -101,21 +98,10 @@
 		var request = $.ajax({
                 type: 'GET',
                 url: "/myData",
-                //dataType: 'json',
+                
                 success: function(data) {
                     words = data;
-                    //console.log(session);
-                    //if(data.name)$('#usrTitle').text('Hey '+session.name+'!');
-                    
-                    
-                    //var socket = io.connect();
-					//socket.on('new tweet', function(tweet){
-					//		if(tweets.length>=100){
-					//			tweets = tweets.splice(0,10);
-					//			console.log('tweets lost homie :(');
-					//		}
-				    //      tweets.push(tweet);
-					//	  });
+
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log('error :(');
@@ -134,7 +120,5 @@
 		getSessionData();
 		getWords();
 		streamOn();
-		//streamOn();
-		//setInterval(getWords,10000);
 	});
 }(this));

@@ -12,16 +12,12 @@
 
     var getWordCaller = (function(){
         var word = $('#qword').val();
-        //$('#qword').val('');
+       
         if(!word || word.length<3)return;
         console.log('button clicked - ' + word);
         getWord(word, function(data){
             $.post("/api/word",{qword: word, val:1},function(code,res){
-                //if(err){
-                    //$('#procnotif').text('Some error updating interests... :(');
-                     //   return;
-                  //  }
-                    //$('#interests').empty();
+                
                     addInterestButton(word,inc++);
                     console.log(word +' submitted!');
                     console.log(res);
@@ -72,7 +68,7 @@
          url: "http://words.bighugelabs.com/api/2/195725a4b480dd0e9ac0cb42750d76e1/"+word+"/json",
          dataType: 'json',
          success: function(data) {
-                       //console.log(data);
+                       
                        callback(data);
                    },
                    error: function(jqXHR, textStatus, errorThrown) {
@@ -108,90 +104,7 @@ function getSessionData(){
     $.ajax(request);
 }   
 
-// function push(a,b,c,el){
-//     a.push(c[el].text);
-//     b.push(c[el].count);
-// }
 
-// function cinit(){
-
-//     var ajaxR = $.ajax({
-//         type: 'GET',
-//         url: "/api/popular/0/20",
-//         success: function(data) {
-//             var cats = [],
-//             vals = [];
-
-//             for(var x = 0;x<data.length;x++){
-//                 push(cats,vals,data,x);
-//             } 
-//             //console.log(cats);
-//         $('#chart').highcharts({
-
-//                 title: {
-//                     text: 'Trending Topics on Twi-Lite',
-//             x: -20 //center
-//         },
-//         subtitle: {
-//             text: 'Source: Twi-Lite Analytics',
-//             x: -20
-//         },
-//         xAxis: {
-//             //lineColor:'#8AE390',
-//             categories: cats ,
-//             title:{ text:'Trends'},
-
-//             labels:{
-//                 //format: '',
-//                 //categories:cats,
-//                 //enabled:true,
-//                 useHTML: true,
-//                 rotation: -30
-//             }
-
-
-//         },
-//         yAxis: {
-//             title: {
-//                 text: 'Followers'
-//             },
-//             plotLines: [{
-//                 value: 0,
-//                 width: 1,
-//                 color: '#8AE390'
-//             }]
-//         },
-//         tooltip: {
-//             valueSuffix: ' Followers'
-//         },
-//         legend: {
-//             layout: 'vertical',
-//             align: 'right',
-//             verticalAlign: 'middle',
-//             borderWidth: 0
-//         },
-//         series: [{
-//             name: 'Trending',
-//             data: vals,
-//             color: '#8AE390'
-//         }],
-//         chart:{
-//             events:{
-//                 click: function(e) {
-//                     console.log(e);
-//                     }
-//                 }
-//             }
-
-//     });   
-// },
-// error: function(jqXHR, textStatus, errorThrown) {}
-// });
-//     $.ajax(ajaxR);
-
-// }
-
-//var ioc = 
 
 function addInterestButton(el,x){
     var string = '<button class="btn btn-default col-md-4" id="i'+x+'">&#x2717; ' + el +'</button>';
@@ -201,11 +114,7 @@ function addInterestButton(el,x){
       interests.push(el);
       console.log('post word: '+ el)
     $.post("/api/removeInterest",{qword: el},function(code,res){
-                //if(err){
-                  //  console.log(res);
-                    //$('#procnotif').text('Some error removing interest... :(');
-                     //return;
-                    //}
+                
                 $('#procnotif').text('Success! '+el +' gone... :(');    
                 $('#i'+x).remove();
                 });
@@ -238,9 +147,7 @@ $(document).ready(function(){
    addWordLookup();
    getSessionData();
    addInterestButtons();
-     //getMyWords();
-     //setInterval(function(){},1);
-     //cinit();
+
      console.log('page js loaded');
  });
 }(this));

@@ -5,8 +5,8 @@
  */
 var express     = require('express'),
     app         = express(),
-    port        = process.env.OPENSHIFT_NODEJS_PORT || 8080,
-    ipS         = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1', 
+    port        = 3000,
+    ipS         = '127.0.0.1', 
     bodyParser  = require('body-parser'),
     session     = require('express-session'),
     http 	    = require('http').Server(app),
@@ -17,26 +17,11 @@ var express     = require('express'),
     mysql       = require('mysql'),
     crypto      = require('crypto'),
     sessData,
-    //colorThief  = require('color-thief'),
     connection;
 
-// var os=require('os');
-// var ifaces=os.networkInterfaces();
-// for (var dev in ifaces) {
-//   var alias=0;
-//   ifaces[dev].forEach(function(details){
-//     if (details.family=='IPv4') {
-//       //console.log(dev+(alias?':'+alias:''),details.address);
-//       ipS = details.address;
-//     }
-//   });
-// }    
 
-//console.log(colorThief);
-//var ct = new colorThief() || 'null :(';
-//console.log(ct);
 connection = mysql.createConnection({
-	host: "mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/",
+	host: "localhost",
 	user: "tweetydb",
 	password: "tweetydb",
 	database: "tweetydb"
@@ -67,31 +52,18 @@ function checkAuth(req, res, next){
 function stripTweet(oTweet,callback){
     var sTweet = {
         text    : oTweet.text,
-        //time    : oTweet.timestamp_ms,
         scrnm   : oTweet.user.screen_name,
         udesc   : oTweet.user.description, 
         imgurl  : oTweet.user.profile_image_url,
-        //banurl  : oTweet.user.profile_banner_url,
-        //verified: oTweet.user.verified,
         meta    : oTweet.entities.urls,
         metah   : oTweet.entities.hashtags
     };
-    //callback(sTweet);
+    
     
     return sTweet;
 }
 
-// function addWordToDB(word){
-//     var sql = "select";
 
-// 	    connection.query(sql, function(err, result){
-//             if (err){
-//                 console.log("Tweeter exists or not inserted: "+ err);
-//                 return;
-//             }
-//             console.log("Inserted a new tweeter with id: " + result.insertId);
-// 	        });
-//     }
 
 function addTweetToDB(tweet){
     	var sql = "INSERT INTO `tweeters` (`scr_name` ,`desc`,`img_url` ,`ban_url`) VALUES ('" + 
@@ -132,63 +104,25 @@ connection.connect(function(err){
 		return;
 	}
 	console.log("Successfully connected to the database");
- //   stream.on('tweet', function(tweet){
- //       //tweet = stripTweet(tweet,addToDB);
- //       tweet = stripTweet(tweet, null);
- //       io.emit('new tweet' ,tweet);
- //       console.log(tweet);
-	// });
+
 
 });
 
-// io.on('connection', function(socket){
-//     console.log('User connected ... Starting Stream connection');
 
-//     // //In order to minimise API usage, we only start stream from twitter when user connected
-//     // stream.on('tweet', function(tweet){
-//     //     //When Stream is received from twitter
-//     //     tweet = stripTweet(tweet, null);
-//     //     io.emit('new tweet' ,tweet); //Send to client via a push
-//     //     //tweets.push(tweet);
-//     //     //console.log(tweet);
-//     // });
-
-
-//     // socket.on('disconnect', function(){
-//     //     console.log("User disconnected");
-//     //     stream.stop();
-//     // });
-// });
 
 //In order to minimise API usage, we only start stream from twitter when user connected
 stream.on('tweet', function(tweet){
     //When Stream is received from twitter
     if(tweet.text[0] ==='R' && tweet.text[1] === 'T')return;
     if(tweet.user.lang!=='en')return;
-    //console.log(tweet.text);
-    //console.log(tweet.entities.hashtags);
+
 
     //if(!tweet.verified)return;
         tweet = stripTweet(tweet, null);
         io.emit('new tweet' ,tweet); //Send to client via a push
-        //tweets.push(tweet);
-        //console.log(tweet);
-    //}
-});
-//this is correct code :)
 
-var cV = 0,c = 0;
-// stream.on('tweet', function(tweet){
-//         //c++;
-//         tweet = stripTweet(tweet, null);
-//         //if(tweet.verified){
-//             console.log(tweet);
-//             //cV++;
-//             io.emit('new tweet' ,tweet); //Send to client via a push
-//         //}
-//     //console.log("verified: "+cV + " count: "+ c);
-//     //console.log(colorThief.getColor(tweet.banurl));
-// 	});
+});
+
 
 app.get("/profile",checkAuth,function(req,res){
     res.redirect("/profile.html");
@@ -215,11 +149,10 @@ app.post('/login', function (req, res) {
             res.redirect('/index.html?li=0');
         
         
-        // res.send("Authentication Successful");
+        
         
         } else  if (row){
-            //console.log(row[0].password);
-            //console.log(password);
+            
             if(row[0].password === password){
                 req.session.user = {userid: row[0].id, email: row[0].email, name: row[0].name};
                 
@@ -227,7 +160,7 @@ app.post('/login', function (req, res) {
                 setTimeout(function(){req.session.save(function(err){
                     if(!err){ // Successfully saved the session
                         console.log("session saved");
-                        //sessData = req.session.user;
+                        
                         console.log(req.session.user);
                         res.redirect('/home'); // We direct to the appropriate page
                     }else{
@@ -236,13 +169,13 @@ app.post('/login', function (req, res) {
                         res.status(500).send("unable to create session");
                     }
                 });},1000);
-                //res.send('incorrect username and password');
+                
             }else res.redirect('/index.html?li=0');
         }
 
     });
 
-	//This is a simple Authentication because we hard code the username and password
+	
     	
 });
 
@@ -278,7 +211,6 @@ app.post('/register', function(req, res){
     });
 
     res.redirect('index.html?s=1');
-    //res.send("You're all Registered... Login now");
     });
 
 app.get("/api/test",function(req, res){
@@ -304,7 +236,6 @@ function addUserRel(user,grp){
 app.post("/api/word",function(req,res){
     var word = req.body.qword;
     console.log(req.session);
-        //var data = req.body.data;
     console.log(word);
     var grp = 0;
         if(word){
@@ -345,17 +276,13 @@ app.post("/api/word",function(req,res){
                             });
                         });
 
-                    //res.json(grp);
+                    
                 }    
                 
-                //console.log(resp);
+          
                 });
             
-        // }else{
-        //     console.log('nada');
-        //     res.send(grp);
-        //     res.status(500).send("Unable to post word");}
-        // }
+
     }
 });
 
@@ -390,17 +317,15 @@ app.post("/api/removeInterest",checkAuth,function(req,res){
 });    
 
 app.post("/api/wordGroup", function(req,res){
-    //console.log(req.body['word[]']);
+   
      console.log(req.body);   
     var list = req.body['word[]'];
     var grp = req.body['val'];
     var lead = req.body['rep'];
     if(grp<1)res.send('invalid grp');
-    //forEach(req.body.word, function(el){list.push(el)});
-    //list = list.concat(req.body);
     console.log(list);
     if(list){
-            //console.log(data);
+            
             var sql = "select MAX(`grp`) as `id` from  `relations`";
             connection.query(sql,function(err, resp){
                 if(err){
@@ -410,8 +335,7 @@ app.post("/api/wordGroup", function(req,res){
                console.log(resp[0].id);
                var grp = resp[0].id
                 console.log("grp: "+grp);
-                //res.send("ok");
-                //return;
+                
                 forEach(list,function(el){
                    var sql = 'insert into `relations` values("'+el+'","'+grp+'",0)';
                     connection.query(sql,function(err,resp){
@@ -427,8 +351,6 @@ app.post("/api/wordGroup", function(req,res){
         }else{
             console.log('nada de listo');
             res.status(200);
-            //res.status(500).send("Unable to post word");
-            //console.log('');
         }
     });
 
@@ -440,7 +362,7 @@ function getMyData(req,appString){
                         console.log('prefs error: '+err);
                         return;
                     }
-                    //console.log('group ids retreived');
+                    
                     forEach(rows,function(el){
                         var query = 'select distinct(`word`) as word from `relations` where `grp`='+el.grp+appString;
                         connection.query(query, function(err,results){
@@ -448,15 +370,15 @@ function getMyData(req,appString){
                                 console.log('groups error: '+err);
                                 return;
                             }
-                            //console.log('words retreived');
+                            
                             var list = [];
                             for(var x = 0; x< results.length;x++){
                                 var lc = results[x].word.toLowerCase();
-                                //console.log(lc);
+                               
                                 lists.push(lc);
-                                //list.push(lc);
+                                
                             }
-                            //req.session.user.list.concat(list);
+                           
                         });
                     });
                 });
@@ -472,7 +394,7 @@ app.get("/sessionData",checkAuth,function(req,res){
 app.get("/myData",checkAuth,function(req,res){
     var r = getMyData(req,'');
     setTimeout(function(){
-        //console.log(req.session.user);
+        
         res.json(r);
     },200);
 });
@@ -480,7 +402,6 @@ app.get("/myData",checkAuth,function(req,res){
 app.get("/myInterests",checkAuth,function(req,res){
     var r = getMyData(req,' and `rep`=1 order by `word` asc');
     setTimeout(function(){
-        //console.log(req.session.user);
         res.json(r);
     },200);
 });
@@ -516,10 +437,10 @@ app.get("/api/popular/:offset/:limit",function(req,res){
                             console.log('some error: '+e);
                             return;
                             }
-                         //var z = y;   
+                         
 
                         response[varX]['text'] = r[0]['word'];
-                        //console.log(varX);
+                        
                         });
                     },x);
                 
@@ -543,8 +464,7 @@ app.get("/api/liteTrends",function(req,res){
             while(x < response.length-1){
                 x++;
                 
-                    //var y = x;
-                   
+                  
                     var sql = "select `word` from `relations` where `grp`="+response[x]['grp'];
                     dofunc(function(varX){
                         connection.query(sql,function(e,r){
@@ -552,12 +472,11 @@ app.get("/api/liteTrends",function(req,res){
                             console.log('some error: '+e);
                             return;
                             }
-                         //var z = y;   
+                          
 
                         for(var y = 0; y<r.length;y++){
                             
                             result.push(r[y]['word']);
-                        //console.log(varX);
                             }
                         });
                     },x);
@@ -583,9 +502,7 @@ http.listen(port, ipS,function(){
    console.log("Listening on http://"+ipS+":"+port);
 });
 
-// http.listen(ipS+':'+port,function(){
-//     console.log("Listening on http://"+ipS+":"+port);
-// });
+
 console.log('Express started on port ' + port);
 
 

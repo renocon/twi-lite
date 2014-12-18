@@ -49,14 +49,12 @@ function push(a,b,c,el){
         	x: -20
         },
         xAxis: {
-            //lineColor:'#8AE390',
+            
             categories: cats ,
             title:{ text:'Trends'},
             
             labels:{
-                //format: '',
-                //categories:cats,
-                //enabled:true,
+                
                 useHTML: true,
                 rotation: -30
             }
