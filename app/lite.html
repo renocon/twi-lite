@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+        <title>Twi-Lite</title>
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="stylesheet" href="styles/main.css" />
+        <link rel="stylesheet" href="styles/bootstrap.css" />
+</head>
+<body>
+	<div class='container col-sm-12 fnavw' style="background-color: #8AE390;color: #FFFFFF;border-color: #8AE390; font-size: 150%">
+		<div class = 'col-md-4'><a href='home'><img src='images/twi-white-2.png' height='35' style='float:left'></image></a></div>
+		
+		<div class = 'col-xs-4'><button id = 'tweetResetButton' class='btn btn-default' style="background-color: #8AE390;color: #FFFFFF;border-color:#8AE390">New Tweets</button></div> 
+		<div class = 'col-md-4'>
+		<span id='usrTitle' style='float:right' style="font-size: 85%"></span>
+		<img src='images/tweety.png' style='float:right' height='35'></img>
+		</div>
+	</div>
+
+	<div class = 'container row col-md-12' >
+		<div class ="container col-md-2 col-sm-8 nav">
+			<nav role="navigation">
+				<ul style='list-style:none'>
+					<li><a href="/home" class='naked'>Home</a></li>
+					<li><a href="/trending" class='naked'>Trending</a></li>
+					<li><a href="/lite" class='naked'>Lite Tweets</a></li>
+					<li><a href="/profile" class='naked'>Profile</a></li>
+					<li><a href="/logout" class='naked'>Log Out</a></li>
+				</ul>	
+			</nav>	
+		</div>
+		
+
+		<div class="container  col-md-8">
+			<table id='tweetsArea' class='table'>
+				<tbody id='tweetArray'>
+					
+
+				</tbody>
+			</table>
+		</div>	
+	</div>	
+
+	<script src="scripts/jquery.js"></script>
+	<script src="scripts/socket.io.js"></script>
+    <script src="scripts/liteTweets.js"></script>
+</body>
+</html>
