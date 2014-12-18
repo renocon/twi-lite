@@ -1,0 +1,32 @@
+{
+	"colors": [
+		"black",
+		"red",
+		"green",
+		"yellow",
+		"blue",
+		"magenta",
+		"cyan",
+		"white",
+		"gray"
+	],
+	"background_colors": [
+		"black",
+		"red",
+		"green",
+		"yellow",
+		"blue",
+		"magenta",
+		"cyan",
+		"white"
+	],
+	"styles": [
+		"bold",
+		"dim",
+		"italic",
+		"underline",
+		"inverse",
+		"hidden",
+		"strikethrough"
+	]
+}
