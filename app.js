@@ -36,7 +36,7 @@ var express     = require('express'),
 //var ct = new colorThief() || 'null :(';
 //console.log(ct);
 connection = mysql.createConnection({
-	host: "localhost",
+	host: "mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/",
 	user: "tweetydb",
 	password: "tweetydb",
 	database: "tweetydb"
@@ -570,7 +570,7 @@ app.get("/api/liteTrends",function(req,res){
 });
 
 app.set('trust proxy', function (ip) {
-  if (ip === '127.0.0.1' || ip === '50.116.19.217' ) return true; // trusted IPs. loopback is self, 2nd ip is related word api IP
+  if (ip === '127.0.0.1' || ip === '50.116.19.217' || ip===ipS) return true; // trusted IPs. loopback is self, 2nd ip is related word api IP
   else return false;
 });
 
