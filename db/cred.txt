@@ -15,3 +15,20 @@ Please make note of these MySQL credentials again:
   Root User: admineHXx8PF
   Root Password: EWLK8bV5IM7U
 URL: https://app-twilite.rhcloud.com/phpmyadmin/
+
+
+MySQL 5.5 database added.  Please make note of these credentials:
+
+       Root User: admin4RhTQkD
+   Root Password: Ci1bntkfcExG
+   Database Name: diy
+
+Connection URL: mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/
+
+You can manage your new MySQL database by also embedding phpmyadmin.
+The phpmyadmin username and password will be the same as the MySQL credentials above.
+
+Please make note of these MySQL credentials again:
+  Root User: admin4RhTQkD
+  Root Password: Ci1bntkfcExG
+URL: https://diy-twilite.rhcloud.com/phpmyadmin/
