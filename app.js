@@ -138,13 +138,13 @@ app.post('/login', function (req, res) {
 	// We read the username and password from the body
 	//Typically we will submit via a form, which will encapsulate the data in the body of the POST request
 	var post = req.body;
-	//console.log(req.body);
+	
     var password = crypto.createHash('sha1').update(post.password).digest('hex');
     var query ='SELECT * FROM `users` where `email`="'+post.email+'"';
 
     connection.query(query,function(err,row){
 
-        if (err) {
+        if (err || row.length !==1) {
             console.log(err);
             res.redirect('/index.html?li=0');
         
@@ -504,8 +504,5 @@ http.listen(port, ipS,function(){
 
 
 console.log('Express started on port ' + port);
-
-
-
 
 

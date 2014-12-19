@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `tweetydb`
 --
-DROP DATABASE `tweetydb`;
+
 CREATE DATABASE IF NOT EXISTS `tweetydb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `tweetydb`;
 
@@ -29,7 +29,7 @@ USE `tweetydb`;
 -- Table structure for table `phrases`
 --
 
-DROP TABLE IF EXISTS `phrases`;
+
 CREATE TABLE IF NOT EXISTS `phrases` (
   `phrase` varchar(12) NOT NULL,
   `grp` int(11) NOT NULL
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `phrases` (
 -- Table structure for table `rel_tweet`
 --
 
-DROP TABLE IF EXISTS `rel_tweet`;
+
 CREATE TABLE IF NOT EXISTS `rel_tweet` (
   `grpid` int(11) NOT NULL,
   `twid` int(11) NOT NULL
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `rel_tweet` (
 -- Table structure for table `relations`
 --
 
-DROP TABLE IF EXISTS `relations`;
+
 CREATE TABLE IF NOT EXISTS `relations` (
   `word` varchar(20) NOT NULL,
   `grp` int(11) NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `relations` (
 -- Table structure for table `tweeters`
 --
 
-DROP TABLE IF EXISTS `tweeters`;
+
 CREATE TABLE IF NOT EXISTS `tweeters` (
 `id` int(12) NOT NULL,
   `scr_name` varchar(30) NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `tweeters` (
 -- Table structure for table `tweets`
 --
 
-DROP TABLE IF EXISTS `tweets`;
+
 CREATE TABLE IF NOT EXISTS `tweets` (
 `id` int(11) NOT NULL,
   `text` varchar(145) NOT NULL,
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `tweets` (
 -- Table structure for table `user_prefs`
 --
 
-DROP TABLE IF EXISTS `user_prefs`;
+
 CREATE TABLE IF NOT EXISTS `user_prefs` (
   `userid` int(12) NOT NULL,
   `grpid` int(12) NOT NULL
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `user_prefs` (
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
+
 CREATE TABLE IF NOT EXISTS `users` (
 `id` int(11) NOT NULL,
   `email` varchar(40) NOT NULL,
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Table structure for table `words`
 --
 
-DROP TABLE IF EXISTS `words`;
+
 CREATE TABLE IF NOT EXISTS `words` (
   `word` varchar(100) NOT NULL,
   `grp` int(12) NOT NULL
